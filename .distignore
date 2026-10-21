@@ -10,3 +10,4 @@
 /.distignore
 /README.md
 /CHANGELOG.md
+/.phpunit.result.cache
