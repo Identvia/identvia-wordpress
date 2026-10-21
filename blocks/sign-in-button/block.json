@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "identvia-login/sign-in-button",
+	"title": "Sign in with Identvia",
+	"category": "widgets",
+	"icon": "admin-users",
+	"description": "A \"Sign in with Identvia\" button. Hidden when the visitor is already signed in.",
+	"keywords": [ "login", "sso", "identvia" ],
+	"textdomain": "identvia-login",
+	"attributes": {
+		"text": { "type": "string", "default": "signin", "enum": [ "signin", "continue", "signup" ] },
+		"theme": { "type": "string", "default": "light", "enum": [ "light", "dark", "brand", "auto" ] },
+		"size": { "type": "string", "default": "medium", "enum": [ "small", "medium", "large" ] },
+		"shape": { "type": "string", "default": "rounded", "enum": [ "rect", "rounded", "pill" ] },
+		"redirect": { "type": "string", "default": "" }
+	},
+	"supports": { "html": false, "align": [ "left", "center", "right" ] },
+	"editorScript": "file:./editor.js",
+	"style": "identvia-login-button"
+}

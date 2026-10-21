@@ -1,0 +1,25 @@
+{
+	"name": "identvia/identvia-login",
+	"description": "Sign in with Identvia for WordPress (OpenID Connect, PKCE).",
+	"type": "wordpress-plugin",
+	"license": "MIT",
+	"version": "0.1.0",
+	"require": {
+		"php": ">=7.4",
+		"ext-openssl": "*",
+		"ext-json": "*"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^9.6",
+		"wp-coding-standards/wpcs": "^3.1",
+		"phpcompatibility/phpcompatibility-wp": "^2.1",
+		"dealerdirect/phpcodesniffer-composer-installer": "^1.0"
+	},
+	"config": {
+		"allow-plugins": { "dealerdirect/phpcodesniffer-composer-installer": true }
+	},
+	"scripts": {
+		"test": "phpunit",
+		"lint": "phpcs"
+	}
+}
