@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1 (2026-10-21)
+
+- Repository hygiene: `.gitignore` now excludes `dist/` and zip files. No code changes.
+
 ## 0.1.0 (2026-10-21)
 
 - First release: Sign in with Identvia on wp-login.php, `[identvia_login_button]` shortcode and block.
