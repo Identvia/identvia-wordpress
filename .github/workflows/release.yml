@@ -1,0 +1,61 @@
+# Release for a version tag (v1.2.3):
+#  1. checks that the tag, plugin header, IDENTVIA_LOGIN_VERSION and readme.txt "Stable tag" agree,
+#  2. builds identvia-login-<version>.zip (files listed in .distignore are left out) and attaches it to a GitHub release,
+#  3. deploys to the WordPress.org plugin SVN (trunk + tags/<version>, banners/icons from .wordpress-org/)
+#     only when the SVN_USERNAME and SVN_PASSWORD secrets exist. They can only exist after WordPress.org has
+#     approved the plugin; until then this step is skipped and the zip is submitted by hand.
+#     SVN_PASSWORD is the SVN password from https://profiles.wordpress.org/me/profile/edit/group/3/?screen=svn-password
+name: Release
+on:
+  push:
+    tags: ['v[0-9]+.[0-9]+.[0-9]+']
+  workflow_dispatch:
+permissions: { contents: read }
+concurrency: { group: release-wordpress, cancel-in-progress: false }
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write # create the GitHub release
+    steps:
+      - uses: actions/checkout@v4
+      - name: Versions agree
+        run: |
+          h=$(sed -n 's/^ \* Version: *//p' identvia-login.php | tr -d '[:space:]')
+          c=$(sed -n "s/^define( 'IDENTVIA_LOGIN_VERSION', '\(.*\)' );/\1/p" identvia-login.php)
+          r=$(sed -n 's/^Stable tag: *//p' readme.txt | tr -d '[:space:]')
+          echo "header=$h constant=$c stable_tag=$r ref=$GITHUB_REF_NAME"
+          [ "$h" = "$c" ] && [ "$h" = "$r" ] || { echo "::error::Plugin versions disagree"; exit 1; }
+          if [ "$GITHUB_REF_TYPE" = tag ] && [ "v$h" != "$GITHUB_REF_NAME" ]; then echo "::error::Plugin is $h but the tag is $GITHUB_REF_NAME"; exit 1; fi
+          echo "VERSION=$h" >> "$GITHUB_ENV"
+      - name: Build plugin zip
+        run: |
+          mkdir -p dist/identvia-login
+          rsync -a --exclude-from=.distignore ./ dist/identvia-login/
+          cd dist && zip -qr "identvia-login-$VERSION.zip" identvia-login
+      - uses: actions/upload-artifact@v4
+        with: { name: identvia-login, path: 'dist/identvia-login-*.zip' }
+      - name: GitHub release with the zip
+        if: github.ref_type == 'tag'
+        env: { GH_TOKEN: '${{ github.token }}' }
+        run: |
+          notes=$(awk -v v="## $VERSION" '$0 ~ "^"v {f=1; next} /^## / && f {exit} f' CHANGELOG.md)
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" "dist/identvia-login-$VERSION.zip" --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" "dist/identvia-login-$VERSION.zip" --title "Identvia Login $VERSION" --notes "$notes"
+          fi
+      - name: WordPress.org SVN credentials present?
+        id: svn
+        env: { SVN_USERNAME: '${{ secrets.SVN_USERNAME }}' }
+        run: echo "ok=$([ -n "$SVN_USERNAME" ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+      - name: Deploy to WordPress.org
+        if: github.ref_type == 'tag' && steps.svn.outputs.ok == 'true'
+        uses: 10up/action-wordpress-plugin-deploy@stable
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SLUG: identvia-login
+          VERSION: ${{ env.VERSION }}
+          ASSETS_DIR: .wordpress-org

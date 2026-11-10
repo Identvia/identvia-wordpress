@@ -11,3 +11,6 @@
 /README.md
 /CHANGELOG.md
 /.phpunit.result.cache
+/.wordpress-org
+/dist
+/languages/.gitkeep

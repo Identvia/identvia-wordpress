@@ -203,7 +203,7 @@ class Identvia_Login_Settings {
 				printf(
 					/* translators: %s: link to the Identvia developer portal. */
 					esc_html__( 'Create a confidential client in the %s, then register this redirect URI:', 'identvia-login' ),
-					'<a href="https://identvia.com/developers" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Identvia developer portal', 'identvia-login' ) . '</a>'
+					'<a href="https://id.identvia.com/developers" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Identvia developer portal', 'identvia-login' ) . '</a>'
 				);
 				?>
 			</p>

@@ -35,10 +35,18 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+      - name: Versions agree (header, constant, readme Stable tag)
+        run: |
+          h=$(sed -n 's/^ \* Version: *//p' identvia-login.php | tr -d '[:space:]')
+          c=$(sed -n "s/^define( 'IDENTVIA_LOGIN_VERSION', '\(.*\)' );/\1/p" identvia-login.php)
+          r=$(sed -n 's/^Stable tag: *//p' readme.txt | tr -d '[:space:]')
+          echo "header=$h constant=$c stable_tag=$r"
+          [ "$h" = "$c" ] && [ "$h" = "$r" ] || { echo "::error::Plugin versions disagree"; exit 1; }
+          echo "VERSION=$h" >> "$GITHUB_ENV"
       - name: Build plugin zip
         run: |
           mkdir -p dist/identvia-login
           rsync -a --exclude-from=.distignore ./ dist/identvia-login/
-          cd dist && zip -qr identvia-login-0.1.0.zip identvia-login
+          cd dist && zip -qr "identvia-login-$VERSION.zip" identvia-login
       - uses: actions/upload-artifact@v4
-        with: { name: identvia-login, path: dist/identvia-login-0.1.0.zip }
+        with: { name: identvia-login, path: 'dist/identvia-login-*.zip' }

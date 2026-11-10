@@ -61,10 +61,9 @@ class Identvia_Login {
 	}
 
 	/**
-	 * Text domain, shortcode and block.
+	 * Button styles, shortcode and block. Translations load automatically (WordPress 4.6+).
 	 */
 	public function init() {
-		load_plugin_textdomain( 'identvia-login', false, dirname( plugin_basename( IDENTVIA_LOGIN_FILE ) ) . '/languages' );
 		wp_register_style( 'identvia-login-button', IDENTVIA_LOGIN_URL . 'assets/button.css', array(), IDENTVIA_LOGIN_VERSION );
 		add_shortcode( 'identvia_login_button', array( $this, 'shortcode' ) );
 		register_block_type( IDENTVIA_LOGIN_DIR . 'blocks/sign-in-button', array( 'render_callback' => array( $this, 'render_block' ) ) );

@@ -1,5 +1,9 @@
 # Identvia Login for WordPress
 
+[![Latest release](https://img.shields.io/github/v/release/Identvia/identvia-wordpress?label=release&sort=semver)](https://github.com/Identvia/identvia-wordpress/releases/latest)
+[![CI](https://github.com/Identvia/identvia-wordpress/actions/workflows/ci.yml/badge.svg)](https://github.com/Identvia/identvia-wordpress/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 This plugin adds **Sign in with Identvia** to WordPress. It uses OpenID Connect with PKCE and works as a confidential client, so the client secret stays on your server.
 
 - Puts the button on `wp-login.php`. There is also a `[identvia_login_button]` shortcode and an `identvia-login/sign-in-button` block, with no build step.
@@ -10,7 +14,7 @@ This plugin adds **Sign in with Identvia** to WordPress. It uses OpenID Connect 
 
 ## Quickstart
 
-1. Copy this folder to `wp-content/plugins/identvia-login` and activate it.
+1. Download `identvia-login-<version>.zip` from the [latest release](https://github.com/Identvia/identvia-wordpress/releases/latest) and upload it on **Plugins → Add New → Upload Plugin** (or copy this folder to `wp-content/plugins/identvia-login`), then activate it. It is also submitted to the WordPress.org plugin directory as `identvia-login`.
 2. In the Identvia developer portal, create a confidential client. Register `https://YOUR-SITE/wp-login.php?action=identvia_callback` as its redirect URI. For federated logout, also register `https://YOUR-SITE/wp-login.php?loggedout=true` as a sign-out URI.
 3. On **Settings → Identvia Login**, enter the client ID and secret. The issuer defaults to `https://id.identvia.com`.
 
