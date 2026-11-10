@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3 (2026-11-09)
+
+- Plugin URI now points to https://github.com/Identvia/identvia-wordpress so it differs from the Author URI (https://identvia.com), as the WordPress.org plugin review requires.
+
 ## 0.1.2 (2026-11-09)
 
 - Ready for the WordPress.org plugin directory: `readme.txt` gains an **External services** section, `Tested up to: 7.1`, and links to the developer portal, terms and privacy policy on id.identvia.com.

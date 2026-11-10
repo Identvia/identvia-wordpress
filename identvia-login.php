@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name:       Identvia Login
- * Plugin URI:        https://identvia.com
+ * Plugin URI:        https://github.com/Identvia/identvia-wordpress
  * Description:       Adds "Sign in with Identvia": a privacy-first single sign-on button on the login page, plus a shortcode and a block. Uses OpenID Connect with PKCE.
- * Version:           0.1.2
+ * Version:           0.1.3
  * Requires at least: 6.2
  * Requires PHP:      7.4
  * Author:            Identvia
@@ -18,7 +18,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'IDENTVIA_LOGIN_VERSION', '0.1.2' );
+define( 'IDENTVIA_LOGIN_VERSION', '0.1.3' );
 define( 'IDENTVIA_LOGIN_FILE', __FILE__ );
 define( 'IDENTVIA_LOGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'IDENTVIA_LOGIN_URL', plugin_dir_url( __FILE__ ) );

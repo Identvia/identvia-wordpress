@@ -4,7 +4,7 @@ Tags: login, sso, openid connect, oauth, single sign-on
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.1.2
+Stable tag: 0.1.3
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -91,8 +91,11 @@ Identvia is provided by Identvia: [Terms of Service](https://id.identvia.com/ter
 
 == Changelog ==
 
-= 0.1.2 =
+= 0.1.3 =
 * First release in the WordPress.org plugin directory.
+* Plugin URI now points to the plugin's own page (its GitHub repository), separate from the Author URI.
+
+= 0.1.2 =
 * Readme: External services section, Tested up to 7.1, links to the Identvia developer portal, terms and privacy policy.
 * Plugin URI now points to https://identvia.com. The release zip is named after the plugin version.
 * Translations load automatically; the plugin no longer calls load_plugin_textdomain().
@@ -105,5 +108,5 @@ Identvia is provided by Identvia: [Terms of Service](https://id.identvia.com/ter
 
 == Upgrade Notice ==
 
-= 0.1.2 =
+= 0.1.3 =
 First release in the WordPress.org plugin directory.
